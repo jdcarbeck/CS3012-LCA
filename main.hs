@@ -1,13 +1,14 @@
 import Text.Printf
-data BinaryTree a = Node { value :: a,
-                           left :: (BinaryTree a),
-                           right :: (BinaryTree a)}
-                  | Leaf deriving Show
-tree :: BinaryTree Int
+data Tree a = Empty
+            | Node a (Tree a) (Tree a) deriving (Show)
+
+--Takes a binary Tree and returns the value to the left of it
+
+tree :: Tree Int
 tree = Node 1
   (Node 2
-    (Node 4 Leaf Leaf)
-    (Node 5 Leaf Leaf))
+    (Node 4 Empty Empty)
+    (Node 5 Empty Empty))
   (Node 3
-    (Node 6 Leaf Leaf)
-    (Node 7 Leaf Leaf))
+    (Node 6 Empty Empty)
+    (Node 7 Empty Empty))
