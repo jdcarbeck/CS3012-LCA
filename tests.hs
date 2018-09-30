@@ -1,3 +1,3 @@
 import Test.HUnit
-
-testTree
+--Test the createTree function
+--Test the addToTree funtion
