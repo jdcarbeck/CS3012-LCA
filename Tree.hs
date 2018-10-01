@@ -37,3 +37,6 @@ commonPath (x:[]) (y:[])
           | otherwise = []
 commonPath (x:xs) (y:ys)
           | x == y = x:(commonPath xs ys)
+
+mathFunc :: Int -> Int
+mathFunc x = x - 1
