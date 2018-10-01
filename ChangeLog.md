@@ -1,3 +1,3 @@
-# Changelog for LCA
+# Changelog for LowestCommonAncestor
 
 ## Unreleased changes
