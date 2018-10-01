@@ -30,13 +30,12 @@ findPath x (Node i treeL treeR)
 
 --Finds common path between two paths
 commonPath :: [Int] -> [Int] -> [Int]
+commonPath (x:[]) (y:[]) 
+          | x == y = x:[]
+          | otherwise = [] 
 commonPath (x:xs) [] = []
 commonPath [] (y:ys) = []
-commonPath (x:[]) (y:[])
-          | x == y = x:[]
-          | otherwise = []
 commonPath (x:xs) (y:ys)
           | x == y = x:(commonPath xs ys)
+          | otherwise = []
 
-mathFunc :: Int -> Int
-mathFunc x = x - 1
