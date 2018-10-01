@@ -1,3 +1,5 @@
+module Tree where
+
 data Tree a = Empty
             | Node a (Tree a) (Tree a) deriving (Show)
 
@@ -21,10 +23,16 @@ createTree (x:xs) = addToTree x (createTree xs)
 addToTree :: Int -> Tree Int -> Tree Int
 addToTree x Empty = (Node x Empty Empty)
 addToTree x (Node i treeL treeR)
-            | x <= i = Node i (addToTree x treeL) treeR
-            | otherwise = Node i treeL (addToTree x treeR)
+          | x <= i = Node i (addToTree x treeL) treeR
+          | otherwise = Node i treeL (addToTree x treeR)
 
 --Preforms LCA on two given values
+--lca :: Int -> Int -> Tree -> Int
 
---Create a tree from a file of csv of Ints
+findPath :: Int -> Tree Int -> [Int]
+findPath x Empty = error "value not in the given tree"
+findPath x (Node i treeL treeR)
+          | x == i = i:[]
+          | x < i = i:(findPath x treeL)
+          | otherwise = i:(findPath x treeR)
 
