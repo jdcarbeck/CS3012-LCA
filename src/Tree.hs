@@ -32,7 +32,7 @@ lca x y tree = last (commonPath(findPath x tree)(findPath y tree))
 
 --Finds path for a given int in tree
 findPath :: Int -> Tree Int -> [Int]
-findPath x Empty = []
+findPath x Empty = error "value not in the given tree"
 findPath x (Node i treeL treeR)
           | x == i = i:[]
           | x < i = i:(findPath x treeL)
