@@ -1,4 +1,3 @@
 #!/bin/sh
-stack build
-
+runhaskell Spec.hs
 
