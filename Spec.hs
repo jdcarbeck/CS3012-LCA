@@ -38,6 +38,15 @@ main = hspec $ do
       findPath 6 testTree `shouldBe` ([4,6])
     it "returns the path from 7 testTree" $
       findPath 7 testTree `shouldBe` ([4,6,7])
+  describe "common path from Tree.hs" $ do
+    it "returns the empty list for no common path" $
+      commonPath [1,4,5] [] `shouldBe` []
+    it "returns the root in oposite leaf nodes" $
+      commonPath (findPath 7 testTree) (findPath 3 testTree) `shouldBe` [4]
+    it "returns the parent in a parent and child node" $
+      commonPath (findPath 2 testTree) (findPath 1 testTree) `shouldBe` [4,2]
+    it "returns the parent for two child nodes" $
+      commonPath (findPath 3 testTree) (findPath 1 testTree) `shouldBe` [4,2]
   describe "lca from testTree in Spec.hs" $ do
     it "returns correct lca for 1 2 testTree" $
       lca 1 2 testTree `shouldBe` 2
