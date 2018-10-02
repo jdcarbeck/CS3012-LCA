@@ -23,6 +23,21 @@ main = hspec $ do
       lca 1 2 (createTree [1,2]) `shouldBe` 2
     it "returns the lca for a tree created from a list with 3 elements" $
       lca 1 3 (createTree [1,3,2]) `shouldBe` 2
+  describe "find path from test in Spec.hs" $ do
+    it "returns the path from 1 testTree" $
+      findPath 1 testTree `shouldBe` [4,2,1] 
+    it "returns the path from 2 testTree" $
+      findPath 2 testTree `shouldBe` ([4,2])
+    it "returns the path from 3 testTree" $
+      findPath 3 testTree `shouldBe` ([4,2,3])
+    it "returns the path from 4 testTree" $
+      findPath 4 testTree `shouldBe` ([4])
+    it "returns the path from 5 testTree" $
+      findPath 5 testTree `shouldBe` ([4,6,5])
+    it "returns the path from 6 testTree" $
+      findPath 6 testTree `shouldBe` ([4,6])
+    it "returns the path from 7 testTree" $
+      findPath 7 testTree `shouldBe` ([4,6,7])
   describe "lca from testTree in Spec.hs" $ do
     it "returns correct lca for 1 2 testTree" $
       lca 1 2 testTree `shouldBe` 2
