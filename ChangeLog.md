@@ -1,3 +1,3 @@
-# Changelog for LCA01
+# Changelog for DAG-LCA
 
 ## Unreleased changes
