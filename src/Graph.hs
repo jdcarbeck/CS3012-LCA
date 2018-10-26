@@ -26,8 +26,23 @@ isEqual x y | x == y = True
 
 -- insert if not already in the Graph (with empty edges)
 insertVertex :: Eq a => a -> Graph a -> Graph a
-insertVertex x graph = undefined
--- insertVertex x [] = Graph [(x, [])]
+insertVertex x (Graph []) = (Graph ((x,[]):[]))
+-- insertVertex x (Graph ((a,_):[])) = (Graph ((a,b:bs):[]))
+insertVertex x graph | (checkInGraph x graph) == True = graph
+insertVertex x (Graph ((a,_):b)) = insertVertex x (Graph (b))
+
+-- insertVertex x (Graph [y:ys])
+--                       | graph == empty = createGraph [(x,[])]
+--                       | checkInGraph
+
+checkInGraph :: Eq a => a -> Graph a -> Bool
+checkInGraph x (Graph []) = False
+checkInGraph x (Graph ((a,_):[]))
+                    | x == a = True
+                    | otherwise = False
+checkInGraph x (Graph ((a,_):b))
+                    | x == a = True
+                    | otherwise = checkInGraph x (Graph (b))
 
 insertEdge :: Eq a => (a,a) -> Graph a -> Graph a
 insertEdge = undefined -- insert edge in list of origin
