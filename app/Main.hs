@@ -1,5 +1,5 @@
 module Main where
 
-import Tree
+import Graph
 
 main = putStrLn "Hello World"
