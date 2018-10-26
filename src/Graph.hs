@@ -1,19 +1,5 @@
 module Graph where
 
--- data Graph a = Graph [(a,[a])] -- Graph is a list of origins paired with edgeends
---
--- createGraph ::Eq a => [(a,a)] -> Graph a
--- createGraph = undefined
---
--- empty :: Graph a
--- empty = Graph []
---
--- insertVertex :: Eq a => a -> Graph a -> Graph a
--- insertVertex = undefined -- insert if not already in the Graph (with empty edges)
---
--- insertEdge :: Eq a => (a,a) -> Graph a -> Graph a
--- insertEdge = undefined -- insert edge in list of origin
--- --do not forget to add origin, end if they don't exist
 -- TODO: Assume that you want to find the ancestors of x and y in a graph.
 --
 -- Maintain an array of vectors- parents (storing parents of each node).
@@ -35,11 +21,13 @@ isEmpty a | a == empty = True
           | otherwise = False
 
 isEqual :: Eq a => Graph a -> Graph a -> Bool
-isEqual x y = False
+isEqual x y | x == y = True
+            | otherwise = False
 
-
+-- insert if not already in the Graph (with empty edges)
 insertVertex :: Eq a => a -> Graph a -> Graph a
-insertVertex = undefined -- insert if not already in the Graph (with empty edges)
+insertVertex x graph = undefined
+-- insertVertex x [] = Graph [(x, [])]
 
 insertEdge :: Eq a => (a,a) -> Graph a -> Graph a
 insertEdge = undefined -- insert edge in list of origin

@@ -17,9 +17,9 @@ tests :: [TF.Test]
 tests = [testGroup "\n\nTesting for LCA"
           [ checkingEmptinessOfGraph
           , checkingEquivalenceOfGraph
-          -- , creationOfGraphFromList
-          -- , insertingVertexIntoGraph
+          , insertingVertexIntoGraph
           -- , insertingEdgeIntoGraph
+          -- , creationOfGraphFromList
           -- , bfsForGivenVertex
           -- , lcaForGivenVertices
           ]
@@ -44,6 +44,20 @@ checkingEquivalenceOfGraph
    , testCase "Check two nonempty unequal graphs to be equivalent"
         ( isEqual nonEmptyGraph exampleGraph @?= False )
    ]
+
+insertingVertexIntoGraph :: TF.Test
+insertingVertexIntoGraph
+ = testGroup "\nInserting a vertex into an existing graph"
+ [ testCase "Check the insertion of an element of into an nonempty graph"
+        ( isEqual (Graph [(1,[]),(2,[])] :: Graph Int)
+                  (insertVertex 2 nonEmptyGraph) @?= True )
+ , testCase "Check the insertion of an element into an empty graph"
+        ( isEqual (Graph [(1,[])])(insertVertex 1 emptyGraph) @?= True )
+ , testCase "Check the insertion of an dupulicate element into an graph"
+        ( isEqual nonEmptyGraph (insertVertex 1 nonEmptyGraph) @?= True )
+ ]
+
+
 -- creationOfGraphFromList :: TF.Test
 -- creationOfGraphFromList
 --  = testGroup "\nChecking if a graph can be created from lists of elements"
