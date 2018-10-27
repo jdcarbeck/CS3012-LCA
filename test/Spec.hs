@@ -15,6 +15,8 @@ nonEmptyGraph1 = Graph [(2,[])] :: Graph Int
 exampleGraph = Graph [(1,[]), (2,[1])] :: Graph Int
 exampleGraph1 = Graph [(1,[]), (3,[1])] :: Graph Int
 exampleGraph2 = Graph [(1,[]), (3,[])] :: Graph Int
+testGraph = Graph [(1,[]), (3,[1]), (2,[1]), (4,[2,3])] :: Graph Int
+testGraph1 = Graph [(1,[]), (3,[1]), (2,[1]), (4,[2,3]), (5,[])] :: Graph Int
 
 tests :: [TF.Test]
 tests = [testGroup "\n\nTesting for LCA"
@@ -77,11 +79,15 @@ insertingVertexIntoGraph
  = testGroup "\nInserting a vertex into an existing graph"
    [ testCase "Check the insertion of an element into an empty graph"
           ( isEqual (Graph [(1,[])])(insertVertex 1 emptyGraph) @?= True )
-   , testCase "Check the insertion of an dupulicate element into an graph"
+   , testCase "Check the insertion of an duplicate element into an 1 elem graph"
           ( isEqual nonEmptyGraph (insertVertex 1 nonEmptyGraph) @?= True )
-   , testCase "Check the insertion of an element of into an nonempty graph"
-           ( isEqual (Graph [(1,[]),(2,[])] :: Graph Int)
-                     (insertVertex 2 nonEmptyGraph) @?= True )
+   , testCase "Check the insertion of an element of into an nonempty 1 elem graph"
+          ( isEqual (Graph [(1,[]),(2,[])] :: Graph Int)
+                    (insertVertex 2 nonEmptyGraph) @?= True )
+   , testCase "Check the insertion of an duplicate element into a graph"
+          ( isEqual (testGraph) (insertVertex 4 testGraph) @?= True )
+   , testCase "Check the insertion of an element into a graph"
+          ( isEqual (testGraph1) (insertVertex 5 testGraph) @?= True )
    ]
 
 

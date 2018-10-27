@@ -24,16 +24,11 @@ isEqual :: Eq a => Graph a -> Graph a -> Bool
 isEqual x y | x == y = True
             | otherwise = False
 
--- insert if not already in the Graph (with empty edges)
 insertVertex :: Eq a => a -> Graph a -> Graph a
+insertVertex x graph | (checkInGraph x graph) = graph
 insertVertex x (Graph []) = (Graph ((x,[]):[]))
--- insertVertex x (Graph ((a,_):[])) = (Graph ((a,b:bs):[]))
-insertVertex x graph | (checkInGraph x graph) == True = graph
-insertVertex x (Graph ((a,_):b)) = insertVertex x (Graph (b))
-
--- insertVertex x (Graph [y:ys])
---                       | graph == empty = createGraph [(x,[])]
---                       | checkInGraph
+insertVertex x (Graph ((a,bs):[])) = (Graph ((a,bs):(x,[]):[]))
+insertVertex x (Graph((a,bs):c)) = Graph(((a,bs):c) ++ ((x,[]):[]))
 
 checkInGraph :: Eq a => a -> Graph a -> Bool
 checkInGraph x (Graph []) = False
