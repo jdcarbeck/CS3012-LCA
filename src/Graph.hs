@@ -12,6 +12,7 @@ data Graph a = Graph [(a, [a])] deriving (Eq, Show)
 
 createGraph ::Eq a => [(a,a)] -> Graph a
 createGraph = undefined
+--insertEdge (x,y) (insertVertex x (insertVertex y graph))
 
 empty :: Graph a
 empty = Graph []
@@ -40,7 +41,18 @@ checkInGraph x (Graph ((a,_):b))
                     | otherwise = checkInGraph x (Graph (b))
 
 insertEdge :: Eq a => (a,a) -> Graph a -> Graph a
-insertEdge = undefined -- insert edge in list of origin
+insertEdge (x,y) (Graph []) = (Graph [])
+insertEdge (x,y) (Graph ((a,bs):[]))
+                      | x == a = (Graph ((a,bs:y):[]))
+                      | otherwise = (Graph ((a,bs):[]))
+insertEdge (x,y) (Graph((a,bs):c))
+                      | x == a = (Graph((a,bs:y):c))
+                      | otherwise = (Graph((a,bs):c))
+
+
+-- !! elemIndex
+-- insert edge in list of origin
+--do not forget to add origin, end if they don't exist
 
 bfs :: Eq a => a -> Graph a -> [a]
 bfs = undefined
