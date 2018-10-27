@@ -43,12 +43,22 @@ checkInGraph x (Graph ((a,_):b))
 insertEdge :: Eq a => (a,a) -> Graph a -> Graph a
 insertEdge (x,y) (Graph []) = (Graph [])
 insertEdge (x,y) (Graph ((a,bs):[]))
-                      | x == a = (Graph ((a,bs:y):[]))
+                      | x == a = (Graph ((a,(addAdj y bs)):[]))
                       | otherwise = (Graph ((a,bs):[]))
 insertEdge (x,y) (Graph((a,bs):c))
-                      | x == a = (Graph((a,bs:y):c))
-                      | otherwise = (Graph((a,bs):c))
+          | x == a = (Graph((a,(addAdj y bs)):c))
+          | otherwise = (joinGraph (Graph((a,bs):[])) (insertEdge (x,y) (Graph(c))))
 
+addAdj :: Eq a => a -> [a] -> [a]
+addAdj a [] = [a]
+addAdj a (x:xs)
+              | a == x = [a]
+              | otherwise = (x:(addAdj a xs))
+
+joinGraph :: Eq a => Graph a -> Graph a -> Graph a
+joinGraph (Graph []) (Graph y) = (Graph y)
+joinGraph (Graph x) (Graph y) = (Graph(x++y))
+-- joinGraph (Graph (x:[])) (Graph y) = Graph(x:y)
 
 -- !! elemIndex
 -- insert edge in list of origin

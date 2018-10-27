@@ -11,7 +11,7 @@ main = defaultMain tests --run testCase
 
 emptyGraph = Graph [] :: Graph Int
 nonEmptyGraph = Graph [(1,[])] :: Graph Int
-nonEmptyGraph1 = Graph [(2,[])] :: Graph Int
+nonEmptyGraph1 = Graph [(2,[1])] :: Graph Int
 exampleGraph = Graph [(1,[]), (2,[1])] :: Graph Int
 exampleGraph1 = Graph [(1,[]), (3,[1])] :: Graph Int
 exampleGraph2 = Graph [(1,[]), (3,[])] :: Graph Int
@@ -20,6 +20,7 @@ tests :: [TF.Test]
 tests = [testGroup "\n\nTesting for LCA"
           [ checkingEmptinessOfGraph
           , checkingEquivalenceOfGraph
+          , joiningGraphs
           , checkingVertexInGraph
           , insertingVertexIntoGraph
           , insertingEdgeIntoGraph
@@ -57,6 +58,21 @@ checkingEquivalenceOfGraph
         ( isEqual exampleGraph1 exampleGraph2 @?= False)
     ]
 
+join1 = Graph [(1,[2,3]),(2,[4])] :: Graph Int
+join2 = Graph [(3,[]),(4,[])] :: Graph Int
+join3 = Graph [(1,[2,3]),(2,[4]),(3,[]),(4,[])] :: Graph Int
+
+joiningGraphs :: TF.Test
+joiningGraphs
+  = testGroup "\nChecking the Joining of two Graphs"
+    [ testCase "Check two empty Graphs"
+        ( isEqual (emptyGraph) (joinGraph (emptyGraph) (emptyGraph)) @?= True )
+    , testCase "Check two 1 elem nonempty graphs"
+        ( isEqual (exampleGraph) (joinGraph (nonEmptyGraph) (nonEmptyGraph1)) @?= True )
+    , testCase "Check two nonempty graphs"
+        ( isEqual (join3) (joinGraph (join1) (join2)) @?= True )
+    ]
+
 checkingVertexInGraph :: TF.Test
 checkingVertexInGraph
  = testGroup "\nChecking if an vertex is within a graph"
@@ -91,7 +107,7 @@ insertingVertexIntoGraph
           ( isEqual (testGraph1) (insertVertex 5 testGraph) @?= True )
   ]
 
-testEdge = Graph [(1,[]), (2,[1])] ::Graph Int
+testEdge = Graph [(1,[2]), (2,[])] ::Graph Int
 testEdge1 = Graph [(1,[]), (3,[1]), (2,[1])] :: Graph Int
 testEdge2 = Graph [(1,[]), (3,[1]), (2,[1]), (4,[3])] :: Graph Int
 testEdge3 = Graph [(1,[]), (3,[1]), (2,[1]), (4,[3,2])] :: Graph Int
@@ -101,13 +117,11 @@ insertingEdgeIntoGraph :: TF.Test
 insertingEdgeIntoGraph
  = testGroup "\nInserting a edge into an existing graph"
   [ testCase "Check the insertion of an edge into an empty graph"
-        ( isEqual (testEdge) (insertEdge (1,2) emptyGraph) @?= True )
+        ( isEqual (emptyGraph) (insertEdge (1,2) emptyGraph) @?= True )
   , testCase "Check the insertion of an edge into a graph with exsiting verticies"
-        ( isEqual (testEdge3) (insertEdge (2,4) testEdge2) @?= True )
-  , testCase "Check the insertion of an edge into a graph with just the parent"
-        ( isEqual (testEdge1) (insertEdge (3,4) testEdge1) @?= True )
-  , testCase "Check the insertion of an edge into a graph with just the child"
-        ( isEqual (testEdge4) (insertEdge (5,2) testEdge3) @?= True )
+        ( isEqual (testEdge3) (insertEdge (4,2) testEdge2) @?= True )
+  , testCase "Check the insertion of an edge into a graph with nonexsiting verticies"
+        ( isEqual (testEdge3) (insertEdge (5,3) testEdge3) @?= True )
   ]
 
 -- creationOfGraphFromList :: TF.Test
