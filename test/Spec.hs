@@ -24,7 +24,7 @@ tests = [testGroup "\n\nTesting for LCA"
           , checkingVertexInGraph
           , insertingVertexIntoGraph
           , insertingEdgeIntoGraph
-          -- , creationOfGraphFromList
+          , creationOfGraphFromList
           -- , bfsForGivenVertex
           -- , lcaForGivenVertices
           ]
@@ -111,7 +111,6 @@ testEdge = Graph [(1,[2]), (2,[])] ::Graph Int
 testEdge1 = Graph [(1,[]), (3,[1]), (2,[1])] :: Graph Int
 testEdge2 = Graph [(1,[]), (3,[1]), (2,[1]), (4,[3])] :: Graph Int
 testEdge3 = Graph [(1,[]), (3,[1]), (2,[1]), (4,[3,2])] :: Graph Int
-testEdge4 = Graph [(1,[]), (3,[1]), (2,[1,5]), (4,[3,2]), (5,[])] :: Graph Int
 
 insertingEdgeIntoGraph :: TF.Test
 insertingEdgeIntoGraph
@@ -124,11 +123,15 @@ insertingEdgeIntoGraph
         ( isEqual (testEdge3) (insertEdge (5,3) testEdge3) @?= True )
   ]
 
--- creationOfGraphFromList :: TF.Test
--- creationOfGraphFromList
---  = testGroup "\nChecking if a graph can be created from lists of elements"
---    [ testCase "Check the creation of a graph from empty list"
---         -- ( isEmpty emptyGraph @=? True )
---   --  , testCase "Check the creation of a graph from a single element list"
---   --  , testCase "Check the creation of a graph from a multi element list"
---    ]
+newGraph = Graph [(1,[1]), (3,[1]), (5,[1]), (2,[5,1]), (4,[3,2])] :: Graph Int
+
+creationOfGraphFromList :: TF.Test
+creationOfGraphFromList
+ = testGroup "\nChecking if a graph can be created from lists of elements"
+   [ testCase "Check the creation of a graph from empty list"
+        ( isEqual emptyGraph (createGraph []) @?= True )
+   , testCase "Checking the creation of a graph with one edge"
+        ( isEqual exampleGraph (createGraph [(2,1)]) @?= True )
+   , testCase "Check the creation of a graph with multiple edges"
+        ( isEqual newGraph (createGraph [(5,1),(4,2),(4,3),(2,1),(2,5),(3,1),(1,1)]) @?= True)
+   ]

@@ -11,7 +11,11 @@ module Graph where
 data Graph a = Graph [(a, [a])] deriving (Eq, Show)
 
 createGraph ::Eq a => [(a,a)] -> Graph a
-createGraph = undefined
+createGraph [] = Graph []
+createGraph ((x,y):[]) = (insertEdge (x,y) (insertVertex x (insertVertex y (Graph []))))
+createGraph ((x,y):z) = (insertEdge (x, y) (insertVertex x (insertVertex y (createGraph(z)))))
+-- createGraph ((x,y):z) =
+--   (joinGraph (insertEdge (x,y) (insertVertex x (insertVertex y (Graph [])))) createGraph(z))
 --insertEdge (x,y) (insertVertex x (insertVertex y graph))
 
 empty :: Graph a
@@ -51,18 +55,12 @@ insertEdge (x,y) (Graph((a,bs):c))
 
 addAdj :: Eq a => a -> [a] -> [a]
 addAdj a [] = [a]
-addAdj a (x:xs)
-              | a == x = [a]
-              | otherwise = (x:(addAdj a xs))
+addAdj a (x:xs) | a == x = [a]
+                | otherwise = (x:(addAdj a xs))
 
 joinGraph :: Eq a => Graph a -> Graph a -> Graph a
 joinGraph (Graph []) (Graph y) = (Graph y)
 joinGraph (Graph x) (Graph y) = (Graph(x++y))
--- joinGraph (Graph (x:[])) (Graph y) = Graph(x:y)
-
--- !! elemIndex
--- insert edge in list of origin
---do not forget to add origin, end if they don't exist
 
 bfs :: Eq a => a -> Graph a -> [a]
 bfs = undefined
