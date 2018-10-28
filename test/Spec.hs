@@ -25,8 +25,7 @@ tests = [testGroup "\n\nTesting for LCA"
           , insertingVertexIntoGraph
           , insertingEdgeIntoGraph
           , creationOfGraphFromList
-          -- , bfsForGivenVertex
-          -- , lcaForGivenVertices
+          , lcaForGivenVertices
           ]
         ]
 
@@ -135,3 +134,16 @@ creationOfGraphFromList
    , testCase "Check the creation of a graph with multiple edges"
         ( isEqual newGraph (createGraph [(5,1),(4,2),(4,3),(2,1),(2,5),(3,1),(1,1)]) @?= True)
    ]
+
+lcaForGivenVertices :: TF.Test
+lcaForGivenVertices
+ = testGroup "\nChecking lca of two vertices in a graph"
+  [ testCase "Checking the lca of vertices in a empty graph"
+        ( ([]) == (lca (1,2) emptyGraph) @?= True )
+  , testCase "Checking the lca of verices that are contained in graph"
+        ( ([1]) == (lca (1,5) newGraph) @?= True )
+  , testCase "Checking the lca of vertices that have no parents"
+        ( ([]) == (lca (1,3) newGraph) @?= True )
+  , testCase "Checking the lca of verticies not in the graph"
+        ( ([]) == (lca (6,7) newGraph) @?= True )
+  ]

@@ -14,9 +14,6 @@ createGraph ::Eq a => [(a,a)] -> Graph a
 createGraph [] = Graph []
 createGraph ((x,y):[]) = (insertEdge (x,y) (insertVertex x (insertVertex y (Graph []))))
 createGraph ((x,y):z) = (insertEdge (x, y) (insertVertex x (insertVertex y (createGraph(z)))))
--- createGraph ((x,y):z) =
---   (joinGraph (insertEdge (x,y) (insertVertex x (insertVertex y (Graph [])))) createGraph(z))
---insertEdge (x,y) (insertVertex x (insertVertex y graph))
 
 empty :: Graph a
 empty = Graph []
@@ -60,10 +57,9 @@ addAdj a (x:xs) | a == x = [a]
 
 joinGraph :: Eq a => Graph a -> Graph a -> Graph a
 joinGraph (Graph []) (Graph y) = (Graph y)
+joinGraph (Graph x) (Graph []) = (Graph x)
 joinGraph (Graph x) (Graph y) = (Graph(x++y))
 
-bfs :: Eq a => a -> Graph a -> [a]
-bfs = undefined
-
-lca :: Eq a => (a,a) -> Graph a -> a
-lca = undefined
+lca :: Eq a => (a,a) -> Graph a -> [a]
+lca (x,y) (Graph []) = []
+-- lca = undefined
