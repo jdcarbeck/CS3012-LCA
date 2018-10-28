@@ -24,6 +24,7 @@ dependencies:
 - HUnit
 - test-framework
 - test-framework-hunit
+- List
 
 library:
   source-dirs: src

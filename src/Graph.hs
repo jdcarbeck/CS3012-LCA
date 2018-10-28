@@ -8,6 +8,8 @@ module Graph where
 -- Find the ancestors of y using same method and store them in another vector. Now, you have two vectors storing the ancestors of x and y respectively along with their depth.
 -- LCA would be common ancestor with greatest depth. Depth is defined as longest distance from root(vertex with in_degree=0). Now, we can sort the vectors in decreasing order of their depths and find out the LCA. Using this method, we can even find multiple LCA's (if there).
 
+import Data.List
+
 data Graph a = Graph [(a, [a])] deriving (Eq, Show)
 
 createGraph ::Eq a => [(a,a)] -> Graph a
@@ -62,4 +64,20 @@ joinGraph (Graph x) (Graph y) = (Graph(x++y))
 
 lca :: Eq a => (a,a) -> Graph a -> [a]
 lca (x,y) (Graph []) = []
--- lca = undefined
+lca (x,y) graph = (intersect (findPath x graph) (findPath y graph))
+
+findPath :: Eq a => a -> Graph a -> [a]
+findPath x (Graph []) = []
+findPath x (Graph ((a,bs):[]))
+                        | (isAnEdge x bs) = [a]
+                        | otherwise = []
+findPath x (Graph ((a,bs):c))
+                        | (isAnEdge x bs) = ([a] ++ (findPath x (Graph c)))
+                        | otherwise = (findPath x (Graph c))
+
+isAnEdge :: Eq a => a -> [a] -> Bool
+isAnEdge x [] = False
+isAnEdge x (y:[]) | x == y = True
+                  | otherwise = False
+isAnEdge x (y:ys) | x == y = True
+                  | otherwise = (isAnEdge x ys)
