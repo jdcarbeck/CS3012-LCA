@@ -1,0 +1,52 @@
+name:                DAG-LCA
+version:             0.1.0.0
+github:              "githubuser/DAG-LCA"
+license:             BSD3
+author:              "John Carbeck"
+maintainer:          "carbeckj@tcd.ie"
+copyright:           "2018 John Carbeck"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/DAG-LCA#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- HUnit
+- test-framework
+- test-framework-hunit
+- List
+
+library:
+  source-dirs: src
+
+executables:
+  DAG-LCA-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - DAG-LCA
+
+tests:
+  DAG-LCA-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - DAG-LCA
