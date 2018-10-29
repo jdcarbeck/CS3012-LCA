@@ -4,7 +4,7 @@ Any elements in the tree can be searched and the lowest common ancestor can be f
 
 project can be run with the command `./run.sh`
 
-##Limitations
+## Limitations
 This software does provide a library to create DAGs and to determine the LCA between
 them. But the implementation lacks key implementation to provide best possible run
 time. Thus this program would need to be improved in order to be used for large sets
